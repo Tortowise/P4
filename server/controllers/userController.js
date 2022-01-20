@@ -1,3 +1,4 @@
+const apiError = require('../error/ApiError.js');
 class UserController {
     async registration(req, res) {
 
@@ -7,9 +8,12 @@ class UserController {
 
     }
 
-    async check(req, res) {
-        const query = req.query;
-        res.json(query.id);
+    async check(req, res, next) {
+        const {id} = req.query;
+        if (!id){
+           return  next(apiError.badRequest('not defined'));
+        }
+        res.json(id);
      }
 }
 
